@@ -15,11 +15,11 @@ async function main() {
 
   await abyatkn.connect(owner).mint(
     signer2.address,
-    ethers.utils.parseEther('100000')
+    ethers.utils.parseEther('1000000000') //1 Billion ABYTKNS
   )
   await usdc.connect(owner).mint(
     signer2.address,
-    ethers.utils.parseEther('100000')
+    ethers.utils.parseEther('1000000')  //1 Million USDC
   )
   await wrappedBitcoin.connect(owner).mint(
     signer2.address,

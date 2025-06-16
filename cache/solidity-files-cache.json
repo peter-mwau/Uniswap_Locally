@@ -329,6 +329,535 @@
       "artifacts": [
         "ABYATKN"
       ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/contracts/Add_Swap_Contract.sol": {
+      "lastModificationDate": 1750078994943,
+      "contentHash": "3ff560d808a928f25909b001c10c5b0f",
+      "sourceName": "contracts/Add_Swap_Contract.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "Add_Swap_Contract"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol": {
+      "lastModificationDate": 1750058457954,
+      "contentHash": "ffd42687b3db01d30c24213d961fcf9f",
+      "sourceName": "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3SwapCallback.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.5"
+      ],
+      "artifacts": [
+        "ISwapRouter"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol": {
+      "lastModificationDate": 1750102510006,
+      "contentHash": "78ea5e100826615428583761926066f3",
+      "sourceName": "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+        "./IPoolInitializer.sol",
+        "./IERC721Permit.sol",
+        "./IPeripheryPayments.sol",
+        "./IPeripheryImmutableState.sol",
+        "../libraries/PoolAddress.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.5"
+      ],
+      "artifacts": [
+        "INonfungiblePositionManager"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3SwapCallback.sol": {
+      "lastModificationDate": 1750058455225,
+      "contentHash": "a8ba2d37b0107911ae0e3b0e123cbd83",
+      "sourceName": "@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IUniswapV3SwapCallback"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol": {
+      "lastModificationDate": 1750058457857,
+      "contentHash": "11600b3ed90d17aa07e53a77430a6d6c",
+      "sourceName": "@uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.5"
+      ],
+      "artifacts": [
+        "IPoolInitializer"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": {
+      "lastModificationDate": 1750058457764,
+      "contentHash": "9073d26f60e6253b2dfbc103c78cf70d",
+      "sourceName": "@uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.5"
+      ],
+      "artifacts": [
+        "IERC721Permit"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol": {
+      "lastModificationDate": 1750058457824,
+      "contentHash": "8aa07bcaad7779d2bae8089adef235bf",
+      "sourceName": "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.5"
+      ],
+      "artifacts": [
+        "IPeripheryPayments"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol": {
+      "lastModificationDate": 1750058457803,
+      "contentHash": "e68917661480772223d87a606afb29cd",
+      "sourceName": "@uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IPeripheryImmutableState"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+      "lastModificationDate": 1750101997357,
+      "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Metadata"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol": {
+      "lastModificationDate": 1750102847378,
+      "contentHash": "6396ed089d3e35e769de3d3b60119a08",
+      "sourceName": "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "PoolAddress"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
+      "lastModificationDate": 1750101997313,
+      "contentHash": "f4dd06783f321aa26179bc2b6e361c29",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Enumerable"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1750101997300,
+      "contentHash": "48de4c9a3a4ae5ef66a2aa620843413f",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1750101997147,
+      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 5000,
+            "details": {
+              "yul": false
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
     }
   }
 }
