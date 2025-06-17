@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Add_Swap_Contract {
@@ -25,6 +26,10 @@ contract Add_Swap_Contract {
         token1 = _token1;
     }
 
+    /// @notice Add liquidity to the pool
+    /// @param amount0Desired Desired amount of token0
+    /// @param amount1Desired Desired amount of token1
+    /// @return tokenId The ID of the NFT representing the liquidity position
     function addLiquidity(
         uint256 amount0Desired,
         uint256 amount1Desired
@@ -54,6 +59,11 @@ contract Add_Swap_Contract {
         (tokenId,,,) = positionManager.mint(params);
     }
 
+    /// @notice Swap tokens in the pool
+    /// @param inputToken The token being swapped
+    /// @param outputToken The token being received
+    /// @param amountIn The amount of inputToken to swap
+    /// @return amountOut The amount of outputToken received
     function swapExactInputSingle(
         address inputToken,
         address outputToken,
@@ -74,5 +84,39 @@ contract Add_Swap_Contract {
         });
 
         amountOut = swapRouter.exactInputSingle(params);
+    }
+
+    /// @notice Get pool information
+    /// @param pool The address of the pool
+    /// @return sqrtPriceX96 Current square root price
+    /// @return tick Current tick
+    /// @return liquidity Current liquidity in the pool
+    function getPoolInfo(address pool) external view returns (uint160 sqrtPriceX96, int24 tick, uint128 liquidity) {
+        (sqrtPriceX96, tick,,,,,) = IUniswapV3Pool(pool).slot0();
+        liquidity = IUniswapV3Pool(pool).liquidity();
+    }
+
+    /// @notice Get token balances in the pool
+    /// @param pool The address of the pool
+    /// @return bal0 Balance of token0 in the pool
+    /// @return bal1 Balance of token1 in the pool
+    function getPoolBalances(address pool) external view returns (uint256 bal0, uint256 bal1) {
+        bal0 = IERC20(token0).balanceOf(pool);
+        bal1 = IERC20(token1).balanceOf(pool);
+    }
+
+    /// @notice Get a user's NFT position info
+    /// @param tokenId The ID of the NFT representing the liquidity position
+    /// @return liquidity The liquidity provided by the user
+    function getPosition(uint256 tokenId) external view returns (uint128 liquidity) {
+        (,,,,,,, liquidity,,,,) = positionManager.positions(tokenId);
+    }
+
+    /// @notice Get price of token0 relative to token1
+    /// @param pool The address of the pool
+    /// @return price The price of token0 in terms of token1
+    function getTokenPrice(address pool) external view returns (uint256 price) {
+        (uint160 sqrtPriceX96,,,,,,) = IUniswapV3Pool(pool).slot0();
+        price = uint256(sqrtPriceX96) * uint256(sqrtPriceX96) / (2**192);
     }
 }

@@ -7,23 +7,26 @@ import AbyatknArtifact from "../artifacts/contracts/ABYATKN.sol/ABYATKN.json" as
 import UsdcArtifact from "../artifacts/contracts/UsdCoin.sol/UsdCoin.json" assert { type: "json" };
 import UniswapV3PoolArtifact from "@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json" assert { type: "json" };
 import NonfungiblePositionManagerArtifact from "@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json" assert { type: "json" };
+import 'dotenv/config';
 
 // Pool addresses
-const ABYATKN_USDC_500 = '0x1FA8DDa81477A5b6FA1b2e149e93ed9C7928992F'
+const ABYATKN_USDC_500 = process.env.APP_ABYATKN_USDC_500;
 
 // Token addresses
-const ABYATKN_ADDRESS = '0x0165878A594ca255338adfa4d48449f69242Eb8F'
-const USDC_ADDRESS = '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853'
-const WRAPPED_BITCOIN_ADDRESS = '0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6'
+const ABYATKN_ADDRESS = process.env.APP_ABYATKN_ADDRESS;
+const USDC_ADDRESS = process.env.APP_USDC_ADDRESS;
+const WRAPPED_BITCOIN_ADDRESS = process.env.APP_WRAPPED_BITCOIN_ADDRESS;
+
+console.log("Pool Address:", ABYATKN_USDC_500);
 
 
 // Uniswap contract addresses
-const WETH_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
-const FACTORY_ADDRESS = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
-const SWAP_ROUTER_ADDRESS = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0'
-const NFT_DESCRIPTOR_ADDRESS = '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
-const POSITION_DESCRIPTOR_ADDRESS = '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'
-const POSITION_MANAGER_ADDRESS = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707'
+const WETH_ADDRESS = process.env.APP_WETH_ADDRESS;
+const FACTORY_ADDRESS = process.env.APP_FACTORY_ADDRESS;
+const SWAP_ROUTER_ADDRESS = process.env.APP_SWAP_ROUTER_ADDRESS;
+const NFT_DESCRIPTOR_ADDRESS = process.env.APP_NFT_DESCRIPTOR_ADDRESS;
+const POSITION_DESCRIPTOR_ADDRESS = process.env.APP_POSITION_DESCRIPTOR_ADDRESS;
+const POSITION_MANAGER_ADDRESS = process.env.APP_POSITION_MANAGER_ADDRESS;
 
 async function getPoolData(poolContract) {
   const [tickSpacing, fee, liquidity, slot0] = await Promise.all([
@@ -49,24 +52,45 @@ async function main() {
   const abyatknContract = new Contract(ABYATKN_ADDRESS, AbyatknArtifact.abi, provider);
   const usdcContract = new Contract(USDC_ADDRESS, UsdcArtifact.abi, provider);
 
-  await abyatknContract.connect(signer2).approve(POSITION_MANAGER_ADDRESS, ethers.utils.parseEther('1000'));
-  await usdcContract.connect(signer2).approve(POSITION_MANAGER_ADDRESS, ethers.utils.parseEther('1000'));
+  const MAX_UINT = ethers.constants.MaxUint256;
+  await abyatknContract.connect(signer2).approve(POSITION_MANAGER_ADDRESS, MAX_UINT);
+  await usdcContract.connect(signer2).approve(POSITION_MANAGER_ADDRESS, MAX_UINT);
+
+  const abyatknAllowance = await abyatknContract.allowance(signer2.address, POSITION_MANAGER_ADDRESS);
+  const usdcAllowance = await usdcContract.allowance(signer2.address, POSITION_MANAGER_ADDRESS);
+
+  console.log("ABYATKN Allowance:", ethers.utils.formatEther(abyatknAllowance));
+  console.log("USDC Allowance:", ethers.utils.formatEther(usdcAllowance));
+
+  const balanceA = await abyatknContract.balanceOf(signer2.address);
+  const balanceB = await usdcContract.balanceOf(signer2.address);
+  console.log("Balance ABYATKN:", ethers.utils.formatEther(balanceA));
+  console.log("Balance USDC:", ethers.utils.formatEther(balanceB));
+
 
   const poolContract = new Contract(ABYATKN_USDC_500, UniswapV3PoolArtifact.abi, provider);
 
   const poolData = await getPoolData(poolContract);
 
-  const AbyaToken = new Token(31337, ABYATKN_ADDRESS, 18, 'ABYATKN', 'ABYATKN');
+  console.log("Tick Lower:", nearestUsableTick(poolData.tick, poolData.tickSpacing) - poolData.tickSpacing * 2);
+  console.log("Tick Upper:", nearestUsableTick(poolData.tick, poolData.tickSpacing) + poolData.tickSpacing * 2);
+
   const UsdcToken = new Token(31337, USDC_ADDRESS, 18, 'USDC', 'UsdCoin');
+  const AbyaToken = new Token(31337, ABYATKN_ADDRESS, 18, 'ABYATKN', 'ABYATKN');
+
+  const [tokenA, tokenB] = USDC_ADDRESS.toLowerCase() < ABYATKN_ADDRESS.toLowerCase()
+    ? [UsdcToken, AbyaToken]
+    : [AbyaToken, UsdcToken];
 
   const pool = new Pool(
-    AbyaToken,
-    UsdcToken,
+    tokenA,
+    tokenB,
     poolData.fee,
     poolData.sqrtPriceX96.toString(),
     poolData.liquidity.toString(),
     poolData.tick
   );
+
 
   const position = new Position({
     pool: pool,
@@ -77,9 +101,13 @@ async function main() {
 
   const { amount0: amount0Desired, amount1: amount1Desired } = position.mintAmounts;
 
+  console.log("Amount0 Desired:", amount0Desired.toString());
+  console.log("Amount1 Desired:", amount1Desired.toString());
+
+
   const params = {
-    token0: ABYATKN_ADDRESS,
-    token1: USDC_ADDRESS,
+    token0: tokenA.address,
+    token1: tokenB.address,
     fee: poolData.fee,
     tickLower: nearestUsableTick(poolData.tick, poolData.tickSpacing) - poolData.tickSpacing * 2,
     tickUpper: nearestUsableTick(poolData.tick, poolData.tickSpacing) + poolData.tickSpacing * 2,
@@ -97,9 +125,13 @@ async function main() {
     provider
   );
 
-  const tx = await nonfungiblePositionManager.connect(signer2).mint(params, { gasLimit: '1000000' });
-  const receipt = await tx.wait();
-  console.log("Liquidity added:", receipt);
+  try {
+    const tx = await nonfungiblePositionManager.connect(signer2).mint(params, { gasLimit: '8000000' });
+    const receipt = await tx.wait();
+    console.log("Liquidity added:", receipt);
+  } catch (error) {
+    console.error("Error adding liquidity:", error);
+  }
 }
 
 /*

@@ -1,8 +1,12 @@
 import pkg from 'hardhat';
 const { ethers } = pkg;
 
+
 async function main() {
   const [owner, signer2] = await ethers.getSigners();
+
+  // console.log("Owner address:", owner.address);
+  // console.log("Signer2 address:", signer2.address);
 
   const ABYATKN = await ethers.getContractFactory('ABYATKN', owner);
   const abyatkn = await ABYATKN.deploy();

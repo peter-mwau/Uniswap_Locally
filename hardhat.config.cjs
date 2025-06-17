@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+require("dotenv").config();
 
 module.exports = {
   solidity: {
@@ -11,6 +12,7 @@ module.exports = {
             runs: 5000,
             details: { yul: false },
           },
+          viaIR: true,
         },
       },
       {
@@ -27,7 +29,33 @@ module.exports = {
   networks: {
     localhost: {
       url: "http://127.0.0.1:8545",
+      chainId: 31337,
     },
     hardhat: {},
+    skale: {
+      url: process.env.APP_RPC_URL,
+      accounts: [process.env.APP_PRIVATE_KEY, process.env.APP_SECOND_PRIVATE_KEY],
+      chainId: 1020352220,
+      allowUnlimitedContractSize: true,
+    },
   },
+  etherscan: {
+    apiKey: {
+      // Is not required by blockscout. Can be any non-empty string
+      'skale': "abc"
+    },
+    customChains: [
+      {
+        network: "skale",
+        chainId: 1020352220,
+        urls: {
+          apiURL: process.env.APP_BROCK_EXPLORER,
+          browserURL: process.env.APP_RPC_URL,
+        }
+      }
+    ]
+  },
+  sourcify: {
+    enabled: false
+  }
 };
