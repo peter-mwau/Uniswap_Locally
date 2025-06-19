@@ -14,6 +14,27 @@ contract Add_Swap_Contract {
     address public token1;
     uint24 public fee = 500; // 0.05%
 
+    // Enum for transaction types
+    enum TransactionType { LIQUIDITY, SWAP }
+
+    event TransactionAdded(uint256 indexed id, TransactionType indexed transactionType, bytes32 txHash);
+    
+    // Transaction history struct
+    struct Transaction {
+        uint256 id;
+        TransactionType transactionType;
+        string fromToken;
+        string toToken;
+        uint256 fromAmount;
+        uint256 toAmount;
+        uint256 timestamp;
+        bytes32 hash;
+        string status;
+    }
+    
+    // Array to store transaction history
+    Transaction[] public txHistory;
+
     constructor(
         address _swapRouter,
         address _positionManager,
@@ -118,5 +139,43 @@ contract Add_Swap_Contract {
     function getTokenPrice(address pool) external view returns (uint256 price) {
         (uint160 sqrtPriceX96,,,,,,) = IUniswapV3Pool(pool).slot0();
         price = uint256(sqrtPriceX96) * uint256(sqrtPriceX96) / (2**192);
+    }
+
+     /// @notice Add a transaction to history
+    /// @param transactionType Type of transaction (LIQUIDITY or SWAP)
+    /// @param fromToken Symbol of the input token
+    /// @param toToken Symbol of the output token
+    /// @param fromAmount Amount of input token
+    /// @param toAmount Amount of output token
+    /// @param txHash Transaction hash
+    function addTransactionToHistory(
+        TransactionType transactionType,
+        string memory fromToken,
+        string memory toToken,
+        uint256 fromAmount,
+        uint256 toAmount,
+        bytes32 txHash
+    ) public {
+        Transaction memory newTx = Transaction({
+            id: txHistory.length + 1,
+            transactionType: transactionType,
+            fromToken: fromToken,
+            toToken: toToken,
+            fromAmount: fromAmount,
+            toAmount: toAmount,
+            timestamp: block.timestamp,
+            hash: txHash,
+            status: "confirmed"
+        });
+        
+        txHistory.push(newTx);
+
+        emit TransactionAdded(newTx.id, transactionType, txHash);
+    }
+    
+    /// @notice Get all transaction history
+    /// @return Transaction array containing all transactions
+    function getTransactionHistory() public view returns (Transaction[] memory) {
+        return txHistory;
     }
 }
