@@ -17,9 +17,11 @@ contract Add_Swap_Contract {
     // Enum for transaction types
     enum TransactionType { LIQUIDITY, SWAP }
 
-    event TransactionAdded(uint256 indexed id, TransactionType indexed transactionType, bytes32 txHash);
-    
-    // Transaction history struct
+    mapping(address => Transaction[]) private userTxHistory;
+
+    event TransactionAdded(uint256 indexed id, TransactionType indexed transactionType, bytes32 txHash, address indexed user);
+
+    uint256 nextTransactionId;     // Transaction history struct
     struct Transaction {
         uint256 id;
         TransactionType transactionType;
@@ -33,7 +35,7 @@ contract Add_Swap_Contract {
     }
     
     // Array to store transaction history
-    Transaction[] public txHistory;
+    Transaction[] public allTransactions;
 
     constructor(
         address _swapRouter,
@@ -45,6 +47,8 @@ contract Add_Swap_Contract {
         positionManager = INonfungiblePositionManager(_positionManager);
         token0 = _token0;
         token1 = _token1;
+
+        nextTransactionId = 1; // Initialize transaction ID counter
     }
 
     /// @notice Add liquidity to the pool
@@ -157,7 +161,7 @@ contract Add_Swap_Contract {
         bytes32 txHash
     ) public {
         Transaction memory newTx = Transaction({
-            id: txHistory.length + 1,
+            id: nextTransactionId,
             transactionType: transactionType,
             fromToken: fromToken,
             toToken: toToken,
@@ -168,14 +172,23 @@ contract Add_Swap_Contract {
             status: "confirmed"
         });
         
-        txHistory.push(newTx);
+        allTransactions.push(newTx);
 
-        emit TransactionAdded(newTx.id, transactionType, txHash);
+        userTxHistory[msg.sender].push(newTx);
+
+        nextTransactionId++; // Increment the transaction ID for the next transaction
+
+        emit TransactionAdded(newTx.id, transactionType, txHash, msg.sender);
     }
     
     /// @notice Get all transaction history
     /// @return Transaction array containing all transactions
-    function getTransactionHistory() public view returns (Transaction[] memory) {
-        return txHistory;
+    function getAllTransactionHistory() public view returns (Transaction[] memory) {
+        return allTransactions;
     }
+
+    function getUserTransactionHistory() public view returns (Transaction[] memory) {
+    return userTxHistory[msg.sender];
+}
+
 }
