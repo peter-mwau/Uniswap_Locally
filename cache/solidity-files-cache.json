@@ -337,8 +337,8 @@
       ]
     },
     "/home/juniorortiz/Desktop/pierre/Solidity Projects/uniswap_locally/contracts/Add_Swap_Contract.sol": {
-      "lastModificationDate": 1750356302013,
-      "contentHash": "a23b7ba95a9f1c0912edd27db8d7fef3",
+      "lastModificationDate": 1752240818350,
+      "contentHash": "a303905676a34579ae8b0c9d96d9a631",
       "sourceName": "contracts/Add_Swap_Contract.sol",
       "solcConfig": {
         "version": "0.8.24",

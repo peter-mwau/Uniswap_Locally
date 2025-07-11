@@ -32,7 +32,7 @@ async function main() {
 
     const SwapDeploy = await ethers.getContractFactory("Add_Swap_Contract", owner);
 
-    const SwapDeployed = await SwapDeploy.deploy(SWAP_ROUTER_ADDRESS, POSITION_MANAGER_ADDRESS, ABYATKN_ADDRESS, USDC_ADDRESS);
+    const SwapDeployed = await SwapDeploy.deploy(SWAP_ROUTER_ADDRESS, POSITION_MANAGER_ADDRESS, ABYATKN_USDC_500);
 
     await SwapDeployed.deployed();
 
