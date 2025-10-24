@@ -3,10 +3,25 @@ const { ethers } = pkg;
 import { Contract } from 'ethers';
 import { Token } from '@uniswap/sdk-core';
 import { Pool, Position, nearestUsableTick } from '@uniswap/v3-sdk';
-import AbyatknArtifact from "../artifacts/contracts/ABYATKN.sol/ABYATKN.json" assert { type: "json" };
-import UsdcArtifact from "../artifacts/contracts/UsdCoin.sol/UsdCoin.json" assert { type: "json" };
-import UniswapV3PoolArtifact from "@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json" assert { type: "json" };
-import NonfungiblePositionManagerArtifact from "@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json" assert { type: "json" };
+import fs from 'fs';
+import path from 'path';
+
+// Helper to load artifact JSON files from disk (avoids using `assert { type: "json" }` which can cause parse errors)
+const loadArtifact = (artifactPath) => {
+  try {
+    const fullPath = path.resolve(artifactPath);
+    const data = fs.readFileSync(fullPath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error(`Failed to load artifact at ${artifactPath}:`, err.message);
+    throw err;
+  }
+};
+
+const AbyatknArtifact = loadArtifact('./artifacts/contracts/ABYATKN.sol/ABYATKN.json');
+const UsdcArtifact = loadArtifact('./artifacts/contracts/UsdCoin.sol/UsdCoin.json');
+const UniswapV3PoolArtifact = loadArtifact('./node_modules/@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json');
+const NonfungiblePositionManagerArtifact = loadArtifact('./node_modules/@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json');
 import 'dotenv/config';
 
 // Pool addresses
@@ -53,17 +68,17 @@ async function main() {
   const usdcContract = new Contract(USDC_ADDRESS, UsdcArtifact.abi, provider);
 
   const MAX_UINT = ethers.constants.MaxUint256;
-  await abyatknContract.connect(signer2).approve(POSITION_MANAGER_ADDRESS, MAX_UINT);
-  await usdcContract.connect(signer2).approve(POSITION_MANAGER_ADDRESS, MAX_UINT);
+  await abyatknContract.connect(owner).approve(POSITION_MANAGER_ADDRESS, MAX_UINT);
+  await usdcContract.connect(owner).approve(POSITION_MANAGER_ADDRESS, MAX_UINT);
 
-  const abyatknAllowance = await abyatknContract.allowance(signer2.address, POSITION_MANAGER_ADDRESS);
-  const usdcAllowance = await usdcContract.allowance(signer2.address, POSITION_MANAGER_ADDRESS);
+  const abyatknAllowance = await abyatknContract.allowance(owner.address, POSITION_MANAGER_ADDRESS);
+  const usdcAllowance = await usdcContract.allowance(owner.address, POSITION_MANAGER_ADDRESS);
 
   console.log("ABYATKN Allowance:", ethers.utils.formatEther(abyatknAllowance));
   console.log("USDC Allowance:", ethers.utils.formatEther(usdcAllowance));
 
-  const balanceA = await abyatknContract.balanceOf(signer2.address);
-  const balanceB = await usdcContract.balanceOf(signer2.address);
+  const balanceA = await abyatknContract.balanceOf(owner.address);
+  const balanceB = await usdcContract.balanceOf(owner.address);
   console.log("Balance ABYATKN:", ethers.utils.formatEther(balanceA));
   console.log("Balance USDC:", ethers.utils.formatEther(balanceB));
 
@@ -115,7 +130,7 @@ async function main() {
     amount1Desired: amount1Desired.toString(),
     amount0Min: 0,
     amount1Min: 0,
-    recipient: signer2.address,
+    recipient: owner.address,
     deadline: Math.floor(Date.now() / 1000) + (60 * 10),
   };
 
@@ -126,7 +141,7 @@ async function main() {
   );
 
   try {
-    const tx = await nonfungiblePositionManager.connect(signer2).mint(params, { gasLimit: '8000000' });
+    const tx = await nonfungiblePositionManager.connect(owner).mint(params, { gasLimit: '8000000' });
     const receipt = await tx.wait();
     console.log("Liquidity added:", receipt);
   } catch (error) {

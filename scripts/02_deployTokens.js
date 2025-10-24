@@ -18,15 +18,15 @@ async function main() {
   const wrappedBitcoin = await WrappedBitcoin.deploy();
 
   await abyatkn.connect(owner).mint(
-    signer2.address,
+    owner.address,
     ethers.utils.parseEther('1000000000') //1 Billion ABYTKNS
   )
   await usdc.connect(owner).mint(
-    signer2.address,
+    owner.address,
     ethers.utils.parseEther('1000000')  //1 Million USDC
   )
   await wrappedBitcoin.connect(owner).mint(
-    signer2.address,
+    owner.address,
     ethers.utils.parseEther('100000')
   )
 

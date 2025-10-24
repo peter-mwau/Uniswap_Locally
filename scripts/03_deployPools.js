@@ -3,8 +3,23 @@ import pkg from 'hardhat';
 const { ethers } = pkg;
 import { Contract, BigNumber } from 'ethers';
 import bn from 'bignumber.js';
-import UniswapV3FactoryArtifact from "@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json" assert { type: "json" };
-import NonfungiblePositionManagerArtifact from "@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json" assert { type: "json" };
+import fs from 'fs';
+import path from 'path';
+
+// Helper to load artifact JSON files from disk (avoids import assertions which may fail on some Node/Hardhat setups)
+const loadArtifact = (artifactPath) => {
+  try {
+    const fullPath = path.resolve(artifactPath);
+    const data = fs.readFileSync(fullPath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error(`Failed to load artifact at ${artifactPath}:`, err.message);
+    throw err;
+  }
+};
+
+const UniswapV3FactoryArtifact = loadArtifact('./node_modules/@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json');
+const NonfungiblePositionManagerArtifact = loadArtifact('./node_modules/@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json');
 
 // Token addresses
 const ABYATKN_ADDRESS = process.env.APP_ABYATKN_ADDRESS;

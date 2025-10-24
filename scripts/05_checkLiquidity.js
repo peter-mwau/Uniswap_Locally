@@ -1,8 +1,23 @@
 import pkg from 'hardhat';
 const { ethers } = pkg;
 import { Contract } from 'ethers';
-import UniswapV3PoolArtifact from "@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json" assert { type: "json" };
 import 'dotenv/config';
+
+import fs from 'fs';
+import path from 'path';
+
+const loadArtifact = (artifactPath) => {
+  try {
+    const fullPath = path.resolve(artifactPath);
+    const data = fs.readFileSync(fullPath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error(`Failed to load artifact at ${artifactPath}:`, err.message);
+    throw err;
+  }
+};
+
+const UniswapV3PoolArtifact = loadArtifact('./node_modules/@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json');
 
 
 // Pool address

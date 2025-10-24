@@ -3,6 +3,7 @@ const { ethers } = pkg;
 import fs from "fs";
 import path from "path";
 
+
 // Alternative approach: Load artifacts directly from filesystem
 const loadArtifact = (artifactPath) => {
   try {
@@ -17,7 +18,7 @@ const loadArtifact = (artifactPath) => {
 
 // Load artifacts - adjust paths according to your project structure
 const artifacts = {
-  WETH9: loadArtifact("../uniswap_locally/WETH9.json"),
+  WETH9: loadArtifact("../Uniswap_Locally/WETH9.json"),
   UniswapV3Factory: loadArtifact("./node_modules/@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json"),
   SwapRouter: loadArtifact("./node_modules/@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json"),
   NFTDescriptor: loadArtifact("./node_modules/@uniswap/v3-periphery/artifacts/contracts/libraries/NFTDescriptor.sol/NFTDescriptor.json"),

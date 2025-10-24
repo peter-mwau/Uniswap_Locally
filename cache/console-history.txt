@@ -1,0 +1,8 @@
+signer2.address
+const [owner, signer2] = await ethers.getSigners()
+owner.address
+const [owner] = await ethers.getSigners()
+signer2.address
+await owner.getBalance()
+owner.address
+const [owner] = await ethers.getSigners()
