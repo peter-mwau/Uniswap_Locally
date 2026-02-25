@@ -495,8 +495,8 @@ function ownsPosition(address user, uint256 tokenId) public view returns (bool) 
 
     /// @notice Get user transaction history
     /// @return Transaction array containing user's transactions
-    function getUserTransactionHistory() public view returns (Transaction[] memory) {
-        return userTxHistory[msg.sender];
+    function getUserTransactionHistory(address _user) public view returns (Transaction[] memory) {
+        return userTxHistory[_user];
     }
 
     /// @notice Get pool address
