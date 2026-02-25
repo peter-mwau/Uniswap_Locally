@@ -6,8 +6,8 @@ import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 // import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract UsdCoin is ERC20 {
-  uint256 public constant MAX_SUPPLY = 10000000 * 10 ** 18; // 10 Million tokens with 18 decimals
-  uint256 public constant INITIAL_SUPPLY = 1000000 * 10 ** 18; // 1 Million tokens with 18 decimals
+  uint256 public constant MAX_SUPPLY = 1000000000 * 10 ** 6; // 1 Billion tokens with 18 decimals
+  uint256 public constant INITIAL_SUPPLY = 1000000 * 10 ** 6; // 1 Million tokens with 18 decimals
   constructor() ERC20('UsdCoin', 'USDC') {
     require(INITIAL_SUPPLY <= MAX_SUPPLY, "Initial supply exceeds max supply");
     _mint(msg.sender, INITIAL_SUPPLY);

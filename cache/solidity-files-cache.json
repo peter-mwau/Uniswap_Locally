@@ -1125,8 +1125,8 @@
       ]
     },
     "/home/pierre/Desktop/pierre/Solidity_Projects/Uniswap_Locally/contracts/UsdCoin.sol": {
-      "lastModificationDate": 1761282157623,
-      "contentHash": "d62018b1051d94cdc3096e9d8180e7cf",
+      "lastModificationDate": 1772020628832,
+      "contentHash": "f5f0f230623517acd928150e5b127b32",
       "sourceName": "contracts/UsdCoin.sol",
       "solcConfig": {
         "version": "0.8.24",
